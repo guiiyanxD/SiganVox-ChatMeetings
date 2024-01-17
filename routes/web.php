@@ -35,6 +35,10 @@ Route::get('/inicio', function () {
     return view('inicio');
 })->name('inicio');
 
+Route::get('/chats', function(){
+    return view('chats.index');
+})->name('salasChats.index');
+
 
 //Metodos de Pago
 Route::get('/paymentMethod', [PagoController::class, 'index'])

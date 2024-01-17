@@ -47,7 +47,30 @@
                         <span class="ml-4">Subscribciones</span>
                     </a>
                 </li>
+                <!-- Agrega un separador aquí -->
+                <hr class="my-2 border-t border-gray-600">
+                <li class="relative px-6 py-3">
+                    <span
+                        class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 hover:text-blue-300 dark:hover:text-blue-200">
+                        <!-- Texto del separador -->
+                        <span class="ml-4">Salas de chat</span>
+                    </span>
+                </li>
 
+
+                <li class="relative px-6 py-3">
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 hover:text-blue-300 dark:hover:text-blue-200"
+                       href="{{route('salasChats.index')}}"
+                        {{-- href="#" --}}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="7" width="18" height="14" rx="2" ry="2"></rect>
+                            <path d="M7 2h10a1 1 0 011 1v2a5 5 0 01-5 5H7a1 1 0 01-1-1V3a1 1 0 011-1z"></path>
+                        </svg>
+                        <span class="ml-4">Mis salas de chat</span>
+                    </a>
+                </li>
 
                 <!-- Agrega un separador aquí -->
                 <hr class="my-2 border-t border-gray-600">
@@ -124,10 +147,10 @@
                           <i class="fas fa-lock ml-2"></i>
                     </a>
                 </li>
-                
+
                 @endif
-                
-                
+
+
             </ul>
         </ul>
     </div>
