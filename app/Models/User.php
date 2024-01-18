@@ -74,4 +74,8 @@ class User extends Authenticatable
         }));
     }
 
+    public function UserMeet(){
+        return $this->hasMany(UserMeet::class,'user_id');
+    }
+
 }

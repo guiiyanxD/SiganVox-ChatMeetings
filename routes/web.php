@@ -35,10 +35,6 @@ Route::get('/inicio', function () {
     return view('inicio');
 })->name('inicio');
 
-Route::get('/chats', function(){
-    return view('chats.index');
-})->name('salasChats.index');
-
 
 //Metodos de Pago
 Route::get('/paymentMethod', [PagoController::class, 'index'])
@@ -56,3 +52,6 @@ Route::get('/traductor', [Traductor::class, 'index'])
     ->name('traductor.index');
 
     Route::get('detectargesto', [IA_DeteccionController::class, 'detectargesto'])->middleware('auth')->name('detectargesto');
+
+//SALAS DE CHAT
+Route::get('/salas', [\App\Http\Controllers\MeetsController::class,'index'])->name('salasChats.index');
