@@ -54,4 +54,7 @@ Route::get('/traductor', [Traductor::class, 'index'])
     Route::get('detectargesto', [IA_DeteccionController::class, 'detectargesto'])->middleware('auth')->name('detectargesto');
 
 //SALAS DE CHAT
-Route::get('/salas', [\App\Http\Controllers\MeetsController::class,'index'])->name('salasChats.index');
+Route::get('/salas', [\App\Http\Controllers\MeetController::class,'index'])->name('salasChats.index');
+Route::post('/join/h', [\App\Http\Controllers\MeetController::class,'storeAsHost'])->name('salasChats.storeAsHost');
+Route::post('/join/g',[\App\Http\Controllers\MeetController::class, 'storeAsGuest'])->name('salasChats.storeAsGuest');
+Route::get('/chat', [\App\Http\Controllers\MeetController::class, 'showChat'])->name('salasChats.chat');

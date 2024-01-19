@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('description', 250);
+            $table->unsignedBigInteger('invite_id');
             $table->timestamps();
+
+            $table->foreign('invite_id')->on('invites')->references('id');
+
         });
     }
 
