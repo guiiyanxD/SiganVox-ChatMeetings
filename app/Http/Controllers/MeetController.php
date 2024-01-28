@@ -51,7 +51,7 @@ class MeetController extends Controller
 //            broadcast(new PeopleSeeingMeeting($meet));
             return redirect()->route('salasChats.chat');
         }else{
-            return redirect()->route('home')->with('error_message', "Asegurese de completar todos los campos requeridos");
+            return redirect()->route('salasChats.index')->with('error_message', "Asegurese de completar todos los campos requeridos");
 
         }
     }
