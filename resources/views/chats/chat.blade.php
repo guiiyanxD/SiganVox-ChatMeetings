@@ -1,145 +1,162 @@
 @extends('layouts.windmill')
 @section('contenido')
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" dir=ltr>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>Chat Box</title>
+    <link rel=stylesheet href=style.css>
+    <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* Agrega estilos CSS aquí */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: white;
         }
 
-        .chat-container {
-            width: 100%;
-            /* Cambiado a 100% para ocupar todo el ancho */
-            margin: 100px auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        .chatbot {
+            position: static;
+            /* Cambiado a fixed para que se mantenga en su posición incluso al hacer scroll */
+            top: 0;
+            left: 0;
+            width: 81%;
+            height: 600px;
             overflow: hidden;
-            position: relative;
-            /* Añadida propiedad position */
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+                0 32px 64px -48px rgba(0, 0, 0, 0.5);
         }
 
-        .chat-header {
-            background-color: #3498db;
-            color: #fff;
-            padding: 10px;
+        .chatbot header {
+            background: purple;
+            padding: 16px 0;
             text-align: center;
-            font-size: 18px;
-            margin-bottom: 0;
-            /* Ajustado a 0 para reducir el espacio hacia abajo */
         }
 
-
-        .chat-messages {
-            padding: 10px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .message {
-            margin-bottom: 10px;
-        }
-
-        .message.sender {
-            text-align: right;
-        }
-
-        .message.receiver {
-            text-align: left;
-        }
-
-        .message p {
-            background-color: #fff;
-            padding: 8px;
-            border-radius: 5px;
-            margin: 0;
-            display: inline-block;
-        }
-
-        .input-container {
-            position: fixed;
-            /* Añadida propiedad position */
-            bottom: 0;
-            /* Añadida propiedad bottom */
-            width: 80%;
-            /* Cambiado a 100% para ocupar todo el ancho */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .input-container input {
-            flex-grow: 1;
-            padding: 8px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-        .input-container button {
-            background-color: #3498db;
+        .chatbot header h2 {
             color: #fff;
+            font-size: 1.4rem;
+        }
+
+        .chatbot .chatbox {
+            height: 400px;
+            overflow-y: auto;
+            padding: 15px 20px 70px;
+            color: black;
+        }
+
+        .chatbox .chat {
+            display: flex;
+        }
+
+        .chatbox .incoming span{
+            height: 32px;
+            width: 32px;
+            color: black;
+            background: purple;
+        }
+        .chatbox .outgoing {
+            margin: 20px 0;
+            justify-content: flex-end;
+        }
+
+        .chatbox .chat p {
+            color: #fff;
+            max-width: 75%;
+            font-size: 0.95rem;
+            padding: 12px 16px;
+            border-radius: 10px 10px 0 10px;
+            background: purple;
+        }
+
+        .chatbox .incoming p {
+            color: black;
+            background: burlywood;
+            border-radius: 10px 20px 0 10px;
+            align-self: "flex-end";
+        }
+
+        .chatbot .chat-input {
+            position: absolute;
+            bottom: 0;
+            width: 64%;
+            display: flex;
+            gap: 5px;
+            background: #fff;
+            padding: 5px 20px;
+            border-radius: 7px;
+            border-top: 1px solid #ccc;
+        }
+
+        .chatbot .chat-input textarea {
+            height: 55px;
+            width: calc(100% - 80px);
+            /* Ajuste del ancho del textarea para dejar espacio para el botón */
             border: none;
-            padding: 8px 15px;
+            outline: none;
+            font-size: 0.95rem;
+            resize: none;
+            padding: 16px 15px 16px 0;
+
+        }
+
+        .chat-input textarea {
+            height: 55px;
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+            resize: none;
+            padding: 16px 15px 16px 0;
+            color:black;
+        }
+
+        .chatbot .chat-input button {
+            height: 55px;
+            width: 80px;
+            /* Ancho del botón */
+            background: #28a745;
+            /* Color de fondo del botón */
+            color: #fff;
+            /* Color del texto del botón */
+            border: none;
+            border-radius: 7px;
             cursor: pointer;
-            border-radius: 3px;
+            font-size: 0.95rem;
+        }
+
+        .chatbot .chat-input input {
+            color: black; /* Cambia el color del texto dentro del input */
+            caret-color: black; /* Cambia el color del cursor */
         }
     </style>
-
-
-    <title>Vista de Chat</title>
 </head>
 
 <body>
+    <div class=chatbot>
+        <header>
+            <h1>Chat Box</h1>
+        </header>
+        <ul class="chatbox">
+            <li class="chat incoming">
+                <p>Hola <br>¿Cómo estás?</p>
+            </li>
+            <li class="chat outgoing">
+                <p>¿Te puedo hacer una pregunta?</p>
+            </li>
+        </ul>
+        <div class="chat-input">
+            <textarea placeholder="Escribe un mensaje"></textarea>
+            <button type="button" class="btn btn-success">Enviar</button>
 
-    <div class="chat-container">
-        <div class="chat-header">Chat en Vivo</div>
-        <div class="chat-messages">
-            <div class="message receiver">
-                <p>Hola, ¿cómo estás?</p>
-            </div>
-            <div class="message sender">
-                <p¡Hola! Estoy bien, gracias.>
-                    </p>
-            </div>
-            <!-- Agregar más mensajes según sea necesario -->
-        </div>
-        <div class="input-container">
-            <input type="text" placeholder="Escribe tu mensaje...">
-            <button onclick="sendMessage()">Enviar</button>
         </div>
     </div>
-
-    <script>
-        function sendMessage() {
-            var inputElement = document.querySelector('input');
-            var messageText = inputElement.value;
-
-            if (messageText.trim() !== '') {
-                var chatMessages = document.querySelector('.chat-messages');
-                var messageContainer = document.createElement('div');
-                messageContainer.classList.add('message', 'sender');
-                messageContainer.innerHTML = '<p>' + messageText + '</p>';
-                chatMessages.appendChild(messageContainer);
-
-                // Limpiar el input después de enviar el mensaje
-                inputElement.value = '';
-
-                // Puedes implementar la lógica adicional para el manejo del mensaje aquí
-            }
-        }
-    </script>
-
 </body>
 
 </html>
