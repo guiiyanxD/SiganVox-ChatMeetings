@@ -57,12 +57,15 @@ class MeetController extends Controller
     }
 
     public function storeAsGuest(Request $request){
-
+       
         try {
             $inviteController = new InviteController();
 
             $invite = $inviteController->getInvitation($request->meet_code);
             $meet = $this->searchMeetByInvitationCode($invite->id);
+
+            $room = $request->meet_code;
+            
 
             $exist = $invite != null;
             $canJoin = $inviteController->canJoin($invite);
@@ -71,9 +74,10 @@ class MeetController extends Controller
             {
 
                $this->isNewMemberOnMeet($meet);
+               return redirect()->route('salasChats.chat', ['username' => urlencode(Auth::user()->name), 'room' => $room]);
 
-                return redirect()->route('salasChats.chat') ;
-
+/*                return redirect()->route('salasChats.chat')->with(['username' => Auth::user()->name, 'room' => $room]);
+ */
             }
         }catch (\Exception $e){
             return redirect()->route('salasChats.index')
@@ -104,8 +108,13 @@ class MeetController extends Controller
     {
         return Meet::where('invite_id', $inviteId)->first();
     }
-    public function showChat(){
-        return view('chats.chat');
+    public function showChat(Request $request){
+        $username = $request->query('username');
+        $room = $request->query('room');
+
+        // Resto del código de tu controlador
+
+        return view('chats.chat', compact('username', 'room'));
     }
 
     /**
