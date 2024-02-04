@@ -51,7 +51,7 @@ chatForm.addEventListener('submit', (e) => {
   // Clear input
   e.target.elements.msg.value = '';
   e.target.elements.msg.focus();
-}); 
+});
 
 // Output message to DOM
 /* function outputMessage(message) {
@@ -79,13 +79,13 @@ function outputMessage(message) {
   const metaInfo = document.createElement('p');
   metaInfo.classList.add('meta');
   metaInfo.innerHTML = `<span>${message.time}</span>`;
-  
+
   const username = document.createElement('span');
   username.classList.add('username');
   username.innerText = message.username;
 
   metaInfo.appendChild(username);
-  messageContainer.appendChild(metaInfo); 
+  messageContainer.appendChild(metaInfo);
 
   const textContent = document.createElement('p');
   textContent.classList.add('text');

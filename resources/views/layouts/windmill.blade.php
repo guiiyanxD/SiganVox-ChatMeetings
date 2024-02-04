@@ -30,7 +30,7 @@
             top: 0;
             left: 0;
             width: 65%;
-            height: 600px;
+            height: 80%;
             overflow: hidden;
             background: #fff;
             border-radius: 15px;
@@ -65,7 +65,7 @@
         }
 
         .users .list li{
-            background-color: #f4f4f4;
+            /*background-color: #f4f4f4;*/
             border-radius: 8px;
             padding: 10px;
             margin-bottom: 10px;
@@ -113,7 +113,7 @@
             color: black;
             background: burlywood;
             border-radius: 10px 20px 0 10px;
-            align-self: "flex-end";
+            /*align-self: "/";*/
         }
 
         .chatbot .chat-input {

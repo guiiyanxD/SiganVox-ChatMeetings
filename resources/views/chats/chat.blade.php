@@ -1,10 +1,13 @@
 @extends('layouts.windmill')
 @section('contenido')
 <div>
+    <div>
+        {{\Illuminate\Support\Facades\Auth::user()->is_mute}}
+    </div>
     <div class="flex">
         <div class="chatbot chatnew">
             <header class="flex justify-between items-center p-4 bg-gray-800 text-white">
-                <h1 class="">Chat</h1>
+                <h1 class="mx-6">Chat</h1>
                 <button id="leave-btn" class="btn bg-red-450 text-white px-4 py-2"><i class="fa fa-door-open"></i> Salir</button>
             </header>
             <ul class=" chat-messages">
@@ -24,7 +27,7 @@
                 </div>
             </form>
         </div>
-        
+
         <div class="users">
             <header>
                 <h1 id="room-name">Chat Box</h1>
