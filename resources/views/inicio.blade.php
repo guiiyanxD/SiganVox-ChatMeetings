@@ -7,6 +7,7 @@
     </div>
 
     <div class="bg-white p-4 rounded-md shadow-md">
-        <p class="text-lg font-semibold">Has iniciado Sesión correctamente</p>
+        <p class="text-lg text-black font-semibold">Has iniciado Sesión correctamente</p>
+        <p class="text-lg text-black font-semibold">{{\Illuminate\Support\Facades\Auth::user()->is_mute}}</p>
     </div>
 @endsection

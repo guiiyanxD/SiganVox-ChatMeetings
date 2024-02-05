@@ -9,9 +9,9 @@ const userList = document.getElementById('users');
 }); */
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const { username, room } ={username:urlParams.get('username'),room:urlParams.get('room')};
+const { username, room, mute } ={username:urlParams.get('username'),room:urlParams.get('room'), mute:urlParams.get('mute')};
 
-console.log(username,room);
+console.log(username,room, mute);
 
 const ip="127.0.0.1"
 const port="3000"
@@ -71,28 +71,34 @@ chatForm.addEventListener('submit', (e) => {
   document.querySelector('.chat-messages').appendChild(div);
 } */
 function outputMessage(message) {
-  const chatMessages = document.querySelector('.chat-messages');
+    const chatMessages = document.querySelector('.chat-messages');
 
-  const messageContainer = document.createElement('li');
-  messageContainer.classList.add('message', 'chat', 'incoming');
+    const messageContainer = document.createElement('li');
+    messageContainer.classList.add('message', 'chat', 'incoming');
 
-  const metaInfo = document.createElement('p');
-  metaInfo.classList.add('meta');
-  metaInfo.innerHTML = `<span>${message.time}</span>`;
+    const metaInfo = document.createElement('p');
+    metaInfo.classList.add('meta');
+    metaInfo.innerHTML = `<span>${message.time}</span>`;
 
-  const username = document.createElement('span');
-  username.classList.add('username');
-  username.innerText = message.username;
+    const username = document.createElement('span');
+    username.classList.add('username');
+    username.innerText = message.username;
 
-  metaInfo.appendChild(username);
-  messageContainer.appendChild(metaInfo);
+    metaInfo.appendChild(username);
+    messageContainer.appendChild(metaInfo);
 
-  const textContent = document.createElement('p');
-  textContent.classList.add('text');
-  textContent.innerText = message.text;
+    const textContent = document.createElement('p');
+    if(mute === '0'){ //Si el usuario no configuro la ayuda en su perfil, entonces el mensaje es literal
+        textContent.classList.add('text');
+        textContent.innerText = message.text;
+    }else{
+        textContent.classList.add('text');
+        textContent.innerText = '--------';
+    }
 
-  messageContainer.appendChild(textContent);
-  chatMessages.appendChild(messageContainer);
+
+    messageContainer.appendChild(textContent);
+    chatMessages.appendChild(messageContainer);
 }
 
 // Add room name to DOM

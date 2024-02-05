@@ -20,7 +20,7 @@
             <x-label for="accesibilidad" value="{{__('Selecciona si necesitas ayuda con los mensajes dentro de las salas de chat')}}"/>
 
             <label class="relative inline-flex items-center cursor-pointer">
-                <input wire:click="isMute" type="checkbox" @if( $is_mute ) checked @endif value="" class="sr-only peer">
+                <input wire:click="isMute" type="checkbox" @if( \Illuminate\Support\Facades\Auth::user()->$is_mute == 1 ) checked @endif value="" class="sr-only peer">
                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300
                 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700
                 rtl:peer-checked:after:-translate-x-full  after:content-['']

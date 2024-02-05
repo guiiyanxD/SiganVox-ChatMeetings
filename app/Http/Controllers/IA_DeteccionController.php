@@ -11,13 +11,14 @@ class IA_DeteccionController extends Controller
         $rutamodelo= public_path('diego1.h5');
         $scriptPath = base_path('IA_LSTM/detectar.py');
         $venvPath = base_path('IA_LSTM/venv');
-        
+
        // $command = "\"$venvPath/Scripts/activate\" && \"$venvPath/Scripts/python\" \"$scriptPath\"";
         $command = "\"$venvPath/Scripts/activate\" && \"$venvPath/Scripts/python\" \"$scriptPath\" \"$rutamodelo\"";
-        
+
         $output = shell_exec($command);
-        
+
         if ($output) {
+            return dd($output);
             return response()->json(['message' => $output]);
         } else {
             return response()->json(['error' => 'Error al ejecutar el script']);
@@ -27,5 +28,5 @@ class IA_DeteccionController extends Controller
 
         return view('prueba');
     }
-    
+
 }
