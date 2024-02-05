@@ -7,17 +7,18 @@ import time
 import mediapipe as mp
 from tensorflow.keras.models import load_model
 
-model = sys.argv[1]
+# model = sys.argv[0]
+model = load_model('diego1.h5')
 
 
 # ------FUNCTION PARA DETECTAR ------------------------
-def mediapipe_detection(image, model):
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    image.flags.writeable = False
-    results = model.process(image)
-    image.flags.writeable = True
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    return image, results
+def mediapipe_detection(imagen, modelo):
+    imagen = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
+    imagen.flags.writeable = False
+    results = modelo.process(imagen)
+    imagen.flags.writeable = True
+    imagen = cv2.cvtColor(imagen, cv2.COLOR_RGB2BGR)
+    return imagen, results
 
 
 # -------------------------------------------------------
@@ -28,7 +29,7 @@ mp_drawing = mp.solutions.drawing_utils
 # 1. New detection variables
 sequence = []
 sentence = []
-threshold = 0.9
+threshold = 0.7
 
 # Actions that we try to detect
 actions = np.array(['ayer', 'bienvenido', 'buenasTardes', 'chau', 'dormir', 'gracias', 'hermano', 'hola', 'hoy',
@@ -109,6 +110,7 @@ def extract_keypoints(results):
 
 
 cap = cv2.VideoCapture(0)
+
 # Set mediapipe model
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     while cap.isOpened():
