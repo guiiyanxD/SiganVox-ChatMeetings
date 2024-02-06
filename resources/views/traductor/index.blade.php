@@ -83,7 +83,7 @@
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
 
-            const net = await tf.loadGraphModel('http://127.0.0.1:8000/model.json');
+            const net = await tf.loadGraphModel('public/model.json');
 
             const runCoco = async () => {
                 const stream = await navigator.mediaDevices.getUserMedia({

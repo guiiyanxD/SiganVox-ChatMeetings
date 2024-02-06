@@ -101,10 +101,10 @@ def extract_keypoints(results):
                    results.right_hand_landmarks.landmark]).flatten() if results.right_hand_landmarks else np.zeros(
         21 * 3)
 
-    print('este es el pose:', pose)
-    print('este es el fase:', face)
-    print('este es el mano izqui:', lh)
-    print('este es el mano dere:', rh)
+    # print('este es el pose:', pose)
+    # print('este es el fase:', face)
+    # print('este es el mano izqui:', lh)
+    # print('este es el mano dere:', rh)
 
     return np.concatenate([pose, face, lh, rh])
 
@@ -120,15 +120,15 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
         # Make detections
         image, results = mediapipe_detection(frame, holistic)
-        print(results)
+        # print(results)
 
         # Draw landmarks
-        draw_styled_landmarks(image, results)
+        # draw_styled_landmarks(image, results)
 
         # 2. Prediction logic
 
         keypoints = extract_keypoints(results)
-        print('este es el key:', keypoints)
+        # print('este es el key:', keypoints)
         #         sequence.insert(0,keypoints)
         #         sequence = sequence[:30]
         sequence.append(keypoints)
@@ -136,8 +136,8 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
         if len(sequence) == 30:
             res = model.predict(np.expand_dims(sequence, axis=0))[0]
-            print(actions[np.argmax(res)])
-            print('este es el res:', res)
+            # print(actions[np.argmax(res)])
+            # print('este es el res:', res)
 
             # 3. Viz logic
             if res[np.argmax(res)] > threshold:
@@ -149,6 +149,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
             if len(sentence) > 5:
                 sentence = sentence[-5:]
+                print(sentence)
 
             # Viz probabilities
             image = prob_viz(res, actions, image, colors)
