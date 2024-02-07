@@ -7,17 +7,18 @@ import time
 import mediapipe as mp
 from tensorflow.keras.models import load_model
 
-model = sys.argv[1]
+# model = sys.argv[0]
+model = load_model('diego1.h5')
 
 
 # ------FUNCTION PARA DETECTAR ------------------------
-def mediapipe_detection(image, model):
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    image.flags.writeable = False
-    results = model.process(image)
-    image.flags.writeable = True
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    return image, results
+def mediapipe_detection(imagen, modelo):
+    imagen = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
+    imagen.flags.writeable = False
+    results = modelo.process(imagen)
+    imagen.flags.writeable = True
+    imagen = cv2.cvtColor(imagen, cv2.COLOR_RGB2BGR)
+    return imagen, results
 
 
 # -------------------------------------------------------
@@ -28,7 +29,7 @@ mp_drawing = mp.solutions.drawing_utils
 # 1. New detection variables
 sequence = []
 sentence = []
-threshold = 0.9
+threshold = 0.7
 
 # Actions that we try to detect
 actions = np.array(['ayer', 'bienvenido', 'buenasTardes', 'chau', 'dormir', 'gracias', 'hermano', 'hola', 'hoy',
@@ -100,15 +101,16 @@ def extract_keypoints(results):
                    results.right_hand_landmarks.landmark]).flatten() if results.right_hand_landmarks else np.zeros(
         21 * 3)
 
-    print('este es el pose:', pose)
-    print('este es el fase:', face)
-    print('este es el mano izqui:', lh)
-    print('este es el mano dere:', rh)
+    # print('este es el pose:', pose)
+    # print('este es el fase:', face)
+    # print('este es el mano izqui:', lh)
+    # print('este es el mano dere:', rh)
 
     return np.concatenate([pose, face, lh, rh])
 
 
 cap = cv2.VideoCapture(0)
+
 # Set mediapipe model
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     while cap.isOpened():
@@ -118,15 +120,15 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
         # Make detections
         image, results = mediapipe_detection(frame, holistic)
-        print(results)
+        # print(results)
 
         # Draw landmarks
-        draw_styled_landmarks(image, results)
+        # draw_styled_landmarks(image, results)
 
         # 2. Prediction logic
 
         keypoints = extract_keypoints(results)
-        print('este es el key:', keypoints)
+        # print('este es el key:', keypoints)
         #         sequence.insert(0,keypoints)
         #         sequence = sequence[:30]
         sequence.append(keypoints)
@@ -134,8 +136,8 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
         if len(sequence) == 30:
             res = model.predict(np.expand_dims(sequence, axis=0))[0]
-            print(actions[np.argmax(res)])
-            print('este es el res:', res)
+            # print(actions[np.argmax(res)])
+            # print('este es el res:', res)
 
             # 3. Viz logic
             if res[np.argmax(res)] > threshold:
@@ -147,6 +149,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
             if len(sentence) > 5:
                 sentence = sentence[-5:]
+                print(sentence)
 
             # Viz probabilities
             image = prob_viz(res, actions, image, colors)

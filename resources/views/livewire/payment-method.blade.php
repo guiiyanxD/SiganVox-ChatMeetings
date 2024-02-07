@@ -8,7 +8,7 @@
 
             <div class="flex" wire:ignore>
 
-                <p class="text-gray-600 mr-6">Informacion de la targeta</p>
+                <p class="text-gray-600 mr-6">Informacion de la tarjeta</p>
 
                 <div class="flex-1">
                     <input id="card-holder-name" class="form-control mb-4" placeholder="Nombre del titular de la targeta">
@@ -49,7 +49,7 @@
         </div>
 
     </div>
-  
+
      {{-- solo se mostrara la seccion de metodos de pago añadido si introdujo uno --}}
      @if (count($paymentMethods))
      <section class="bg-white rounded shadow-lg">

@@ -22,7 +22,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-webcam"></script>
-    
+
     <script>
          var textarea = document.getElementById('mensaje');
         const labelMap = {
@@ -65,7 +65,7 @@
 
                    console.log(labelMap[text]['name'] , scores[i]);
                    textarea.value += ' ' + labelMap[text]['name'];
-                   
+
                     // DRAW!!co
                     ctx.beginPath()
                     ctx.fillText(labelMap[text]['name'] + ' - ' + Math.round(scores[i] * 100) / 100, x * imgWidth, y *
@@ -83,9 +83,7 @@
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
 
-            const net = await tf.loadGraphModel(
-                'https://tensorflowjsrealtimemodel.s3.au-syd.cloud-object-storage.appdomain.cloud/model.json'
-                );
+            const net = await tf.loadGraphModel('public/model.json');
 
             const runCoco = async () => {
                 const stream = await navigator.mediaDevices.getUserMedia({

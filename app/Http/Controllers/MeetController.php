@@ -46,18 +46,18 @@ class MeetController extends Controller
                 'name' => $request->meet_name,
                 'description' => $request->meet_description,
             ]);
-
+            $room  = $code->code;
             event(new UserMeetAccess($meet, Auth::user(), 1));
 //            broadcast(new PeopleSeeingMeeting($meet));
-            return redirect()->route('salasChats.chat');
+            return redirect()->route('salasChats.chat', ['username' => urlencode(Auth::user()->name), 'room' => $room,'mute' => urlencode(Auth::user()->is_mute)]);
         }else{
-            return redirect()->route('home')->with('error_message', "Asegurese de completar todos los campos requeridos");
+            return redirect()->route('salasChats.index')->with('error_message', "Asegurese de completar todos los campos requeridos");
 
         }
     }
 
     public function storeAsGuest(Request $request){
-       
+
         try {
             $inviteController = new InviteController();
 
@@ -65,7 +65,7 @@ class MeetController extends Controller
             $meet = $this->searchMeetByInvitationCode($invite->id);
 
             $room = $request->meet_code;
-            
+
 
             $exist = $invite != null;
             $canJoin = $inviteController->canJoin($invite);
@@ -74,7 +74,7 @@ class MeetController extends Controller
             {
 
                $this->isNewMemberOnMeet($meet);
-               return redirect()->route('salasChats.chat', ['username' => urlencode(Auth::user()->name), 'room' => $room]);
+               return redirect()->route('salasChats.chat', ['username' => urlencode(Auth::user()->name), 'room' => $room, 'mute' => urlencode(Auth::user()->is_mute) ]);
 
 /*                return redirect()->route('salasChats.chat')->with(['username' => Auth::user()->name, 'room' => $room]);
  */

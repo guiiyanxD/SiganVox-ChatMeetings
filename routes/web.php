@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])
@@ -51,10 +51,17 @@ Route::get('/traductor', [Traductor::class, 'index'])
     ->middleware(Subscripcion::class)
     ->name('traductor.index');
 
-    Route::get('detectargesto', [IA_DeteccionController::class, 'detectargesto'])->middleware('auth')->name('detectargesto');
+Route::get('detectargesto', [IA_DeteccionController::class, 'detectargesto'])->middleware('auth')->name('detectargesto');
 
 //SALAS DE CHAT
 Route::get('/salas', [\App\Http\Controllers\MeetController::class,'index'])->name('salasChats.index');
 Route::post('/join/h', [\App\Http\Controllers\MeetController::class,'storeAsHost'])->name('salasChats.storeAsHost');
 Route::post('/join/g',[\App\Http\Controllers\MeetController::class, 'storeAsGuest'])->name('salasChats.storeAsGuest');
 Route::get('/chat', [\App\Http\Controllers\MeetController::class, 'showChat'])->name('salasChats.chat');
+
+//ACCESIBILIDAD
+Route::get('/user/settings',function (){
+    return view('profile.settings');
+})->name('user.settings');
+
+//Route::get('/user/settings', \App\Livewire\UserSettings::class)->name('user.settings');
