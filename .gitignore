@@ -16,3 +16,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/public/chatjs/js/main.js
+/server-chat/server.js

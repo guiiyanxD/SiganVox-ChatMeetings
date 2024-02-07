@@ -13,7 +13,7 @@ const { username, room, mute } ={username:urlParams.get('username'),room:urlPara
 
 console.log(username,room, mute);
 
-const ip="127.0.0.1"
+const ip="18.222.133.184"
 const port="3000"
 const url=`${ip}:${port}`;
 console.log(url);
