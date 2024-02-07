@@ -83,7 +83,7 @@
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
 
-            const net = await tf.loadGraphModel('public/model.json');
+            const net = await tf.loadLayersModel('model.json');
 
             const runCoco = async () => {
                 const stream = await navigator.mediaDevices.getUserMedia({
@@ -107,10 +107,10 @@
                 canvas.height = videoHeight;
 
                 const img = tf.browser.fromPixels(video);
-                const resized = tf.image.resizeBilinear(img, [640, 480]);
+                const resized = tf.image.resizeBilinear(img, [30, 1662]);
                 const casted = resized.cast('int32');
                 const expanded = casted.expandDims(0);
-                const obj = await net.executeAsync(expanded);
+                const obj = await net.predict(expanded);
 
                 const boxes = await obj[1].array();
                 const classes = await obj[2].array();
@@ -129,3 +129,68 @@
         });
     </script>
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    navigator.mediaDevices.getUserMedia( {audio: false, video: true} )
+        .then( stream => {
+            mediaRecorder = stream;
+            document.getElementById("video").srcObject = stream;
+            document.getElementById("start_btn").onclick = function (){
+                mediaRecorder = new MediaRecorder(stream)
+                mediaRecorder.start(1000);
+                mediaRecorder.ondataavailable = function (e) {
+                    parts.push(e.data);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener acceso a la cámara web: ', error);
+        });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
